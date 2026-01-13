@@ -57,7 +57,7 @@ func NewNotFoundError(message string) *RestErr {
 	return &RestErr{
 		Message: message,
 		Err:     "not_found",
-		Code:    http.StatusInternalServerError,
+		Code:    http.StatusNotFound,
 	}
 }
 
