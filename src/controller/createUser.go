@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/matheus-castelo/learninggo/src/configuration/validation"
+	"github.com/matheus-castelo/learninggo/src/configuration/rest_err/validation"
 	"github.com/matheus-castelo/learninggo/src/controller/model/request"
 	"github.com/matheus-castelo/learninggo/src/controller/model/response"
 	"github.com/gin-gonic/gin"
