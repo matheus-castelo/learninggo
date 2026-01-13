@@ -2,22 +2,33 @@ package controller
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
-	"github.com/matheus-castelo/learninggo/src/configuration/rest_err"
+	"github.com/matheus-castelo/learninggo/src/configuration/validation"
 	"github.com/matheus-castelo/learninggo/src/controller/model/request"
+	"github.com/matheus-castelo/learninggo/src/controller/model/response"
+	"github.com/gin-gonic/gin"
 )
 
 func CreateUser(c *gin.Context) {
+	log.Println("Init CreateUser controller")
 	var userRequest request.UserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
-		restErr := rest_err.NewBadRequestError(fmt.Sprintf("There are some incorrect fields, error=%s", err.Error()))
-		c.JSON(int(restErr.Code), restErr)
+		log.Printf("Error trying to marshal object, error=%s\n", err.Error())
+		errRest := validation.ValidateUserError(err)
+
+		c.JSON(errRest.Code, errRest)
 		return
 	}
 
 	fmt.Println(userRequest)
-	c.JSON(http.StatusOK, userRequest)
+	
+	res := response.UserResponse{
+		ID:    "test",
+		Email: userRequest.Email,
+	}
+
+	c.JSON(http.StatusOK, res)
 }
